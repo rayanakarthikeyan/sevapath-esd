@@ -36,4 +36,4 @@
 
 The screenshot states Build submission is due **23 October 2026** and accepts one GitHub/Drive link. Use the repository root link. The screenshot separately lists Demo submission on **25 October 2026**. Its Final Demo guidelines PDF was not provided; inspect it before claiming the final stage is complete or recording/submitting any required pitch format.
 
-No competition portal submission has been performed by this project build.
+The author reported the Build-stage submission complete on 23 October 2026. The submission was performed by the author; no portal receipt or judging outcome is independently verified. See [submission status](../submission/STATUS.md).

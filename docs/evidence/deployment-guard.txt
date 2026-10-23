@@ -1,0 +1,3 @@
+PASS: Missing connection settings rejected
+PASS: Configured HTTPS backend accepted
+PASS: Insecure backend URL rejected

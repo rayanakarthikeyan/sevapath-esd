@@ -12,6 +12,13 @@ Read-only public source records. Other returned fields can include title, review
 
 **RPC name:** `sevapath_draft` (PostgREST function endpoint exposed by InsForge).
 
+**HTTP endpoint:** `POST {VITE_INSFORGE_URL}/api/database/rpc/sevapath_draft`.
+
+The source-read endpoint is `GET {VITE_INSFORGE_URL}/api/database/records/service_sources?select=id,url&limit=10`.
+These paths were checked against the pinned SDK 1.5.2 database transport. The SDK sends the public anonymous token in `Authorization: Bearer <public-anon-key>` and a JSON content type for the RPC. Use the SDK examples below; do not expose an administrator key.
+
+For the RPC, the JSON request body is `{ "p_action": "load", "p_token": "<fresh-device-capability>", "p_data": {} }`. A valid new capability returns `{ "draft": null }`; invalid capability syntax or input yields a database/API error, which the SDK exposes as `error`. A valid saved capability returns the draft and readiness fields described below. Unknown capabilities cannot enumerate existing drafts.
+
 **Authentication/authorization:** SDK uses the project's public anonymous key. A private, random 64-character lowercase hexadecimal capability is passed as `p_token` in the JSON body. It authorizes only its own preparation draft. Tokens are generated with browser `crypto.getRandomValues`; SHA-256 hashes are stored. Never place the capability in URLs, logs, analytics, commits or screenshots.
 
 ```js

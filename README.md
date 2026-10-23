@@ -6,6 +6,8 @@ An ESD Innovation Challenge 2026 build: a source-linked Telugu/English companion
 
 **Submission link:** https://github.com/rayanakarthikeyan/sevapath-esd
 
+**Build submission reported complete on 23 October 2026.** [Submission status and maintenance scope](submission/STATUS.md) · [Preserved build baseline](https://github.com/rayanakarthikeyan/sevapath-esd/tree/build-stage-v1)
+
 ![SevaPath citizen workspace](docs/evidence/home-desktop.png)
 
 ## Judge's quick start
@@ -75,6 +77,7 @@ Retrieve these from your own InsForge linked project. **Never use the admin API 
 npm run dev
 # Open the printed Local URL, normally http://127.0.0.1:5173
 npm test
+npm run check:submission
 npm run build
 npm run preview
 ```
@@ -107,7 +110,9 @@ submission/             Submission brief and judge-facing checklist
 
 ## Testing and limitations
 
-The local suite checks classification, ambiguous requests, route-specific readiness, input length, file limits and privacy field filtering. The cloud suite tests actual CRUD, alternate-capability isolation, denied direct access, invalid inputs, feedback and deletion. See [actual results and known issues](docs/TESTING.md); no user-study results are fabricated.
+The local suite checks classification, ambiguous requests, route-specific readiness, input length, file limits and privacy field filtering. The cloud suite tests actual CRUD, alternate-capability isolation, denied direct access, invalid inputs, feedback and deletion. See [actual results and known issues](docs/TESTING.md) and the [43-case expected/actual table](docs/TEST-CASES.md); no user-study results are fabricated.
+
+Dependencies are pinned to the verified versions in the lockfile. CI checks behavior, build output and submission-artifact integrity on Linux and Windows. Public deployment also checks that both backend configuration values exist, so a misconfigured release cannot silently publish in device mode. `npm run check:submission` checks recorded evidence and local links; it does not replace fresh behavior or live cloud tests.
 
 An anonymous random 256-bit device capability is a bearer secret. Only its SHA-256 hash is stored. Losing browser storage loses access to that draft; a shared browser profile shares the capability. Direct anonymous reads and writes to draft tables are revoked, with RLS enabled. Production needs abuse throttling, expiry/retention automation, independent accessibility/security review, source-owner review and a representative multilingual evaluation. This prototype is not a certified government deployment. See [privacy and threat model](docs/PRIVACY.md).
 

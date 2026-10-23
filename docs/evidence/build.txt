@@ -11,4 +11,4 @@ dist/index.html                   1.04 kB │ gzip:  0.63 kB
 dist/assets/index-mGz6IjDR.css   28.12 kB │ gzip:  6.65 kB
 dist/assets/index-CgMGRlz8.js    41.83 kB │ gzip: 13.11 kB
 dist/assets/index-DoflQiAm.js   215.85 kB │ gzip: 59.66 kB
-✓ built in 1.67s
+✓ built in 1.73s

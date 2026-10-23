@@ -21,7 +21,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run build -- --base=/sevapath-esd/
+      - run: npm run check:submission
+      - name: Verify configuration and build connected demo
+        run: |
+          npm run check:deployment
+          npm run build -- --base=/sevapath-esd/
         env:
           VITE_INSFORGE_URL: ${{ secrets.VITE_INSFORGE_URL }}
           VITE_INSFORGE_ANON_KEY: ${{ secrets.VITE_INSFORGE_ANON_KEY }}

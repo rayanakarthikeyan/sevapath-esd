@@ -145,10 +145,10 @@ table(['BUILD REQUIREMENT','WHERE TO REVIEW'],[
  ['Design and source rationale','docs/PROBLEM-EVIDENCE.md, docs/PRIVACY.md']
 ],[164,327])
 add('Stage-specific scope','H2SP')
-add('This pack maps to the supplied Build-stage guidelines. No prior approved Design-stage artifact was provided, so design conformance is not claimed. The screenshot separately lists Demo submission on 25 October 2026; the Final Demo guidelines were not attached and must still be checked. No competition portal submission has been made.','SmallSP')
+add('This pack maps to the supplied Build-stage guidelines. The author reported Build submission complete on 23 October 2026; no portal receipt or judging decision was independently verified. No prior approved Design artifact or Final Demo guidelines PDF was supplied, so those requirements remain unverified. The screenshot separately lists Demo submission on 25 October 2026.','SmallSP')
 add('Primary references','H2SP')
 add('[1] Government of Telangana, mobile-governance FAQ: <link href="https://mgov.telangana.gov.in/faqnew.html" color="#17594c">mgov.telangana.gov.in/faqnew.html</link><br/>[2] Government of Telangana, income application form: <link href="https://www.telangana.gov.in/wp-content/uploads/2023/03/IncomeGeneralApplicationForm.pdf" color="#17594c">IncomeGeneralApplicationForm.pdf</link><br/>[3] Telangana State Portal: <link href="https://www.telangana.gov.in/services/public-utility-forms/" color="#17594c">Public utility forms</link>','SmallSP')
-add('Submit the repository root link','H2SP')
+add('Submitted repository link (author-reported)','H2SP')
 add('<link href="https://github.com/rayanakarthikeyan/sevapath-esd" color="#17594c">https://github.com/rayanakarthikeyan/sevapath-esd</link>')
 
 doc=SimpleDocTemplate(str(OUT),pagesize=(595.28,841.89),rightMargin=52,leftMargin=52,topMargin=47,bottomMargin=60,title='SevaPath - ESD Build Submission Brief',author='rayanakarthikeyan@gmail.com',subject='Telangana income-certificate preparation prototype')

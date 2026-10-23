@@ -1,0 +1,12 @@
+
+> sevapath-esd@1.0.0 check:submission
+> node scripts/check-submission.mjs
+
+PASS: Required build artifacts exist
+PASS: Judge-facing local Markdown links resolve
+PASS: Dependency versions are pinned and match the lockfile
+PASS: Private configuration and generated builds are not tracked
+PASS: Recorded local and cloud test outcomes are passing
+PASS: Submission PDF is present and readable as a PDF container
+PASS: API contract includes concrete HTTP endpoints
+7/7 submission checks passed. Historical evidence checks do not replace fresh runtime tests.

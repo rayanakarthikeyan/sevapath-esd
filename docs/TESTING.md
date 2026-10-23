@@ -2,6 +2,8 @@
 
 Tests executed on **23 October 2026**, against the working build and its newly created prototype cloud backend.
 
+The 26 local cases and 17 live cloud cases are also recorded in the requested [expected result / actual result / status format](TEST-CASES.md). The live cloud suite was rerun during post-submission maintenance; the machine-readable report carries its exact UTC timestamp.
+
 | Layer | Cases / result | Evidence |
 | --- | --- | --- |
 | Local intent/rules/file/privacy regression | **26 passed, 0 failed** | [Raw TAP log](evidence/local-tests.txt), `tests/core.test.mjs` |
@@ -63,7 +65,12 @@ The first restricted localhost preview was inaccessible from the browser; public
 ```sh
 npm ci
 npm test
+npm run check:submission
 npm run build
 # Configure .env.local for your own linked test backend first:
 npm run test:cloud
 ```
+
+`check:submission` verifies required artifacts, local documentation links, pinned/locked dependencies, excluded private configuration, passing recorded evidence, the PDF container and documented HTTP endpoints. Linux and Windows CI run it with fresh local tests/builds on each push. Deployment preflight rejects missing backend configuration. These repository checks are additional maintenance checks, separate from the 43 application regression/integration cases.
+
+Post-submission evidence: [seven submission checks](evidence/submission-checks.txt) and [deployment guard checks](evidence/deployment-guard.txt). The guard was exercised with missing values, a configured HTTPS backend and an insecure HTTP URL; the expected reject/accept/reject results passed.
