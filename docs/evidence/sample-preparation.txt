@@ -1,0 +1,26 @@
+SevaPath - Income certificate preparation
+Independent prototype, not a government application
+
+Route: Citizen login
+Progress: 3/3 self-declared items
+
+[x] One identity document
+A ration card, Aadhaar card or voter ID (EPIC). One alternative from the published form.
+
+[x] Evidence of income
+An IT return, payslip, income evidence or affidavit. No payslip? The form lists alternatives; confirm the suitable proof with MeeSeva.
+
+[x] Passport-size photograph
+Keep a clear passport-size photograph ready.
+
+Confirm the exact service, current documents, fees and process with MeeSeva. For scholarships, confirm whether a fee-reimbursement-specific income service is required. No application is submitted or approved by this checklist.
+
+Official sources (reviewed 23 October 2026):
+Income certificate application form
+https://www.telangana.gov.in/wp-content/uploads/2023/03/IncomeGeneralApplicationForm.pdf
+
+MeeSeva mobile governance FAQ
+https://mgov.telangana.gov.in/faqnew.html
+
+Public utility forms
+https://www.telangana.gov.in/services/public-utility-forms/

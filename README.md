@@ -6,6 +6,8 @@ An ESD Innovation Challenge 2026 build: a source-linked Telugu/English companion
 
 **Submission link:** https://github.com/rayanakarthikeyan/sevapath-esd
 
+![SevaPath citizen workspace](docs/evidence/home-desktop.png)
+
 ## Judge's quick start
 
 1. Open the public demo: **https://rayanakarthikeyan.github.io/sevapath-esd/**.
@@ -122,3 +124,5 @@ An anonymous random 256-bit device capability is a bearer secret. Only its SHA-2
 No earlier approved Design-stage artifact was supplied. The design rationale and scope are documented here; prior-design conformance is not claimed. The attached Build-stage guidelines govern this pack. Final Demo-stage guidelines were not attached, so their additional requirements remain to be checked.
 
 Author/committer email: **rayanakarthikeyan@gmail.com**. Independent competition prototype; no promise of competition outcome.
+
+The optional PDF-generation helper needs Python 3, ReportLab and Pillow; these are not needed to run the web application. Run `python scripts/create-brief.py` to rebuild the brief after collecting screenshots. On another operating system, adjust the font path in that helper.
