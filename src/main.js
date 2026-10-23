@@ -1,4 +1,5 @@
 import './style.css';
+import './readability.css';
 import { sources, reviewedOn, classify, serviceNames, requirements, readiness, validateFile, blankPlan, sanitizePlan } from './knowledge.js';
 import { saveDraft, loadDraft, deleteDraft, sendFeedback, checkCloud } from './api.js';
 
@@ -21,7 +22,7 @@ let plan = blankPlan();
 try { plan = sanitizePlan(JSON.parse(localStorage.getItem('sevapath-plan'))); } catch {}
 let lang = plan.language, route = 'home', result = null, online = false, lastSaved = null;
 const t = (en,te) => lang === 'te' ? te : en;
-function cache() { plan.language=lang; try { localStorage.setItem('sevapath-plan',JSON.stringify(plan)); } catch { toast('Device storage is unavailable. Keep this tab open or export your plan.'); } }
+function cache() { plan.language=lang; lastSaved=null; try { localStorage.setItem('sevapath-plan',JSON.stringify(plan)); } catch { toast('Device storage is unavailable. Keep this tab open or export your plan.'); } }
 function toast(message) { const e=document.querySelector('#toast'); e.textContent=message; e.classList.add('visible'); clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>e.classList.remove('visible'),5500); }
 const monument = `<svg class="monument" viewBox="0 0 340 235" fill="none" aria-hidden="true"><circle cx="201" cy="111" r="88" fill="#e6d6ac" opacity=".42"/><g stroke="#507568" stroke-width="1.3"><path d="M43 213h275M87 210V72h25v138M250 210V72h25v138M102 72V51m162 21V51M83 72h33M246 72h33M87 87h25m138 0h25M91 51h17l-8-17-9 17zm164 0h17l-8-17-9 17zM85 110h29m134 0h29M112 126h138v84H112zM112 142h138M112 161h138M112 126l15-17h108l15 17M128 109V87h14v22m76 0V87h14v22M124 87h22m68 0h22M142 102h76M142 94h76M151 94V82h58v12M159 82l21-17 21 17M151 210v-32c0-29 58-29 58 0v32M160 210v-31c0-18 40-18 40 0v31M120 179h17v20h-17zm105 0h17v20h-17zM93 118h13m-13 18h13m-13 18h13m-13 18h13m150-54h13m-13 18h13m-13 18h13m-13 18h13"/><path d="M92 210v-22h15v22m149 0v-22h13v22M50 210v-35m0 12c-17-7-10-24 0-12 10-12 17 5 0 12zm250 23v-35m0 12c-17-7-10-24 0-12 10-12 17 5 0 12z"/></g><path d="M44 224c41-8 44-3 81-4 75-5 125 9 190-3" stroke="#507568" opacity=".4"/><circle cx="53" cy="75" r="4" fill="#bfa05b"/><path d="m293 52 3-7 3 7 7 3-7 3-3 7-3-7-7-3z" fill="#bfa05b"/></svg>`;
 
@@ -80,13 +81,13 @@ function about() {
 function navigate(next) { route=next; history.replaceState(null,'',`#${next}`); window.speechSynthesis?.cancel(); render(); window.scrollTo({top:0}); document.querySelector('#main').focus({preventScroll:true}); }
 function bind() {
   document.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();navigate(b.dataset.nav);}));
-  document.querySelector('#language').onclick=()=>{lang=lang==='en'?'te':'en';cache();render();};
-  document.querySelector('#large-text').onclick=()=>{document.body.classList.toggle('large-text');render();};
+  document.querySelector('#language').onclick=()=>{lang=lang==='en'?'te':'en';cache();render();document.querySelector('#language').focus({preventScroll:true});};
+  document.querySelector('#large-text').onclick=()=>{document.body.classList.toggle('large-text');render();document.querySelector('#large-text').focus({preventScroll:true});};
   document.querySelectorAll('[data-query]').forEach(b=>b.onclick=()=>{const query=[t('I need an income certificate but no payslip','ఆదాయ ధృవీకరణ పత్రం కావాలి జీతం లేదు'),t('I need an income certificate for a college scholarship','కాలేజీ స్కాలర్‌షిప్ కోసం ఆదాయ ధృవీకరణ పత్రం'),t('I need a birth certificate for my child','జనన ధృవీకరణ పత్రం కావాలి')][Number(b.dataset.query)];result={query,analysis:classify(query)};render();document.querySelector('.result-card')?.scrollIntoView({block:'nearest',behavior:'smooth'});});
   document.querySelector('#intent-form')?.addEventListener('submit',e=>{e.preventDefault();const query=document.querySelector('#query').value.trim();if(!query)return;result={query,analysis:classify(query)};render();document.querySelector('.result-card')?.scrollIntoView({block:'nearest',behavior:'smooth'});});
   document.querySelectorAll('[data-service]').forEach(b=>b.onclick=()=>{if(b.dataset.service==='income'){navigate('plan');return;}result={query:serviceNames[b.dataset.service],analysis:classify(serviceNames[b.dataset.service])};render();document.querySelector('.result-card')?.scrollIntoView({block:'center',behavior:'smooth'});});
-  document.querySelectorAll('[name="channel"]').forEach(e=>e.onchange=()=>{plan.channel=e.value;cache();render();});
-  const employment=document.querySelector('#employment');if(employment)employment.onchange=()=>{plan.employment=employment.value;cache();render();};
+  document.querySelectorAll('[name="channel"]').forEach(e=>e.onchange=()=>{plan.channel=e.value;cache();render();document.querySelector(`[name="channel"][value="${plan.channel}"]`).focus({preventScroll:true});});
+  const employment=document.querySelector('#employment');if(employment)employment.onchange=()=>{plan.employment=employment.value;cache();render();document.querySelector('#employment').focus({preventScroll:true});};
   document.querySelectorAll('[data-check]').forEach(e=>e.onchange=()=>{const key=e.dataset.check;plan[key]=e.checked;cache();render();document.querySelector(`[data-check="${key}"]`)?.focus({preventScroll:true});});
   for(const [id,photo] of [['document-file',false],['photo-file',true]]) {const e=document.querySelector(`#${id}`);if(e)e.onchange=()=>{if(!e.files[0])return;const r=validateFile(e.files[0],photo);const out=document.querySelector('#file-result');out.textContent=r.message;out.className=r.ok?'file-ok':'file-error';};}
   const action=(id,fn)=>{const e=document.querySelector(`#${id}`);if(e)e.onclick=async()=>{e.disabled=true;try{await fn();}catch(err){toast(err.message);}finally{e.disabled=false;}};};
