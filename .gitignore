@@ -4,6 +4,7 @@ dist/
 .env.*
 !.env.example
 .insforge/
+.openai/
 .agents/
 .claude/
 .codex/

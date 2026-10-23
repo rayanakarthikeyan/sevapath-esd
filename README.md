@@ -103,7 +103,6 @@ docs/                   Evidence, API, database, testing, feasibility and demo g
 docs/evidence/          Actual machine-readable test results and screenshots
 submission/             Submission brief and judge-facing checklist
 .github/workflows/      CI and public demo deployment
-.openai/hosting.json     Private companion-preview hosting manifest
 ```
 
 ## Testing and limitations
