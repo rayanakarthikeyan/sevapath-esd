@@ -1,0 +1,17 @@
+{
+  "name": "sevapath-esd",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-grounded, bilingual application readiness for Telangana citizens",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test tests/core.test.mjs",
+    "test:cloud": "node scripts/test-cloud.mjs"
+  },
+  "dependencies": {"@insforge/sdk": "latest"},
+  "devDependencies": {"vite": "^6.4.1"},
+  "engines": {"node": ">=20.19"}
+}

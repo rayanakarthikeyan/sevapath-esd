@@ -1,0 +1,76 @@
+{
+  "testedAt": "2026-10-23T14:08:15.650Z",
+  "environment": "Live InsForge PostgreSQL via anonymous SDK; temporary synthetic data removed",
+  "passed": 17,
+  "failed": 0,
+  "results": [
+    {
+      "case": "Official sources readable anonymously",
+      "status": "PASS"
+    },
+    {
+      "case": "Create a preparation draft",
+      "status": "PASS"
+    },
+    {
+      "case": "Read same capability",
+      "status": "PASS"
+    },
+    {
+      "case": "Other capability cannot read draft",
+      "status": "PASS"
+    },
+    {
+      "case": "Update existing draft and derive readiness",
+      "status": "PASS"
+    },
+    {
+      "case": "Centre route requires application form",
+      "status": "PASS"
+    },
+    {
+      "case": "Reject invalid capability",
+      "status": "PASS"
+    },
+    {
+      "case": "Reject unexpected personal data",
+      "status": "PASS"
+    },
+    {
+      "case": "Reject invalid channel",
+      "status": "PASS"
+    },
+    {
+      "case": "Reject invalid language",
+      "status": "PASS"
+    },
+    {
+      "case": "Reject oversized payload",
+      "status": "PASS"
+    },
+    {
+      "case": "Anonymous direct table access denied",
+      "status": "PASS"
+    },
+    {
+      "case": "Anonymous direct insert denied",
+      "status": "PASS"
+    },
+    {
+      "case": "Feedback for owned draft",
+      "status": "PASS"
+    },
+    {
+      "case": "Other capability cannot attach feedback",
+      "status": "PASS"
+    },
+    {
+      "case": "Reject non-boolean feedback",
+      "status": "PASS"
+    },
+    {
+      "case": "Delete own draft",
+      "status": "PASS"
+    }
+  ]
+}

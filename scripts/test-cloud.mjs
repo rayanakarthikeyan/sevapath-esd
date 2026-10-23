@@ -1,0 +1,32 @@
+import {createClient} from '@insforge/sdk';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {randomBytes} from 'node:crypto';
+import assert from 'node:assert/strict';
+const env=Object.fromEntries(readFileSync('.env.local','utf8').split(/\r?\n/).filter(l=>l.includes('=')&&!l.startsWith('#')).map(l=>{const i=l.indexOf('=');return[l.slice(0,i),l.slice(i+1).replace(/^['"]|['"]$/g,'')];}));
+const client=createClient({baseUrl:env.VITE_INSFORGE_URL,anonKey:env.VITE_INSFORGE_ANON_KEY});
+const a=randomBytes(32).toString('hex'),b=randomBytes(32).toString('hex');
+const results=[];
+const run=async(name,fn)=>{try{await fn();results.push({case:name,status:'PASS'});}catch(e){results.push({case:name,status:'FAIL',detail:e.message});}};
+const rpc=(action,token,data={})=>client.database.rpc('sevapath_draft',{p_action:action,p_token:token,p_data:data});
+try {
+await run('Official sources readable anonymously',async()=>{const r=await client.database.from('service_sources').select('id,url').limit(10);assert.equal(r.error,null);assert.equal(r.data.length,3);});
+await run('Create a preparation draft',async()=>{const r=await rpc('save',a,{language:'en',channel:'citizen',employment:'self'});assert.equal(r.error,null);assert.ok(r.data.draft.id);assert.equal('token_hash' in r.data.draft,false);assert.equal(r.data.ready,false);});
+await run('Read same capability',async()=>{const r=await rpc('load',a);assert.equal(r.error,null);assert.equal(r.data.draft.employment,'self');});
+await run('Other capability cannot read draft',async()=>{const r=await rpc('load',b);assert.equal(r.error,null);assert.equal(r.data.draft,null);});
+await run('Update existing draft and derive readiness',async()=>{const r=await rpc('save',a,{language:'te',channel:'citizen',employment:'other',identity_ready:true,income_ready:true,photo_ready:true});assert.equal(r.error,null);assert.equal(r.data.draft.language,'te');assert.equal(r.data.ready,true);});
+await run('Centre route requires application form',async()=>{const r=await rpc('save',a,{channel:'centre',identity_ready:true,income_ready:true,photo_ready:true,form_ready:false});assert.equal(r.error,null);assert.equal(r.data.ready,false);});
+await run('Reject invalid capability',async()=>{const r=await rpc('load','bad');assert.ok(r.error);});
+await run('Reject unexpected personal data',async()=>{const r=await rpc('save',a,{name:'TEST ONLY'});assert.ok(r.error);});
+await run('Reject invalid channel',async()=>{const r=await rpc('save',a,{channel:'invented'});assert.ok(r.error);});
+await run('Reject invalid language',async()=>{const r=await rpc('save',a,{language:'xx'});assert.ok(r.error);});
+await run('Reject oversized payload',async()=>{const r=await rpc('save',a,{language:'x'.repeat(2000)});assert.ok(r.error);});
+await run('Anonymous direct table access denied',async()=>{const r=await client.database.from('preparation_drafts').select('id').limit(1);assert.ok(r.error || r.data?.length===0);});
+await run('Anonymous direct insert denied',async()=>{const r=await client.database.from('preparation_drafts').insert([{token_hash:'test',source_id:'income-form',language:'en',channel:'citizen',employment:'other'}]).select('id');assert.ok(r.error);});
+await run('Feedback for owned draft',async()=>{const r=await rpc('feedback',a,{helpful:true});assert.equal(r.error,null);assert.equal(r.data.recorded,true);});
+await run('Other capability cannot attach feedback',async()=>{const r=await rpc('feedback',b,{helpful:true});assert.ok(r.error);});
+await run('Reject non-boolean feedback',async()=>{const r=await rpc('feedback',a,{helpful:'yes'});assert.ok(r.error);});
+await run('Delete own draft',async()=>{const r=await rpc('delete',a);assert.equal(r.error,null);const read=await rpc('load',a);assert.equal(read.data.draft,null);});
+} finally {await rpc('delete',a);await rpc('delete',b);}
+const report={testedAt:new Date().toISOString(),environment:'Live InsForge PostgreSQL via anonymous SDK; temporary synthetic data removed',passed:results.filter(r=>r.status==='PASS').length,failed:results.filter(r=>r.status==='FAIL').length,results};
+mkdirSync('docs/evidence',{recursive:true});writeFileSync('docs/evidence/cloud-results.json',JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));if(report.failed)process.exitCode=1;
